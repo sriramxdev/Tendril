@@ -1,8 +1,8 @@
-[project]
+[workspace]
 name = "tendril"
 version = "0.1.0"
 description = "Deterministic diagram synthesis engine from technical specifications"
-authors = ["Sri Ram Sharma 193415805+sriramxdev@users.noreply.github.com"]
+authors = ["Sri Ram Sharma <193415805+sriramxdev@users.noreply.github.com>"]
 channels = ["conda-forge"]
 platforms = ["linux-64", "linux-aarch64", "osx-arm64"]
 license = "AGPL-3.0-or-later"
@@ -10,9 +10,7 @@ readme = "README.md"
 
 [dependencies]
 python = "3.12.*"
-# Native runtime dependencies (no system package manager required)
 nodejs = ">=20.0.0"
-tree-sitter = ">=0.21.0"
 git = "*"
 
 # Backend & Web
@@ -30,7 +28,7 @@ numpy = ">=1.26.0"
 openai = ">=1.14.0"
 
 [pypi-dependencies]
-# Dependencies not readily packaged on conda-forge or requiring PyPI bleeding-edge
+tree-sitter = ">=0.21.0"
 tree-sitter-languages = "*"
 
 [feature.dev.dependencies]
@@ -39,15 +37,11 @@ pytest-asyncio = ">=0.23.0"
 mypy = ">=1.9.0"
 ruff = ">=0.3.0"
 
-[feature.prod]
-# Strips test runners and dev tools for container deployments
-
 [environments]
 default = { features = ["dev"] }
-prod = { features = [], solve-group = "prod" }
+prod = { features = [] }
 
 [tasks]
-# Developer workflow tasks
 dev = "uvicorn server.main:app --reload --host 0.0.0.0 --port 8000"
 lint = "ruff check . && ruff format --check ."
 format = "ruff format . && ruff check --fix ."
